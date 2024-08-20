@@ -1,0 +1,31 @@
+cmake_minimum_required(VERSION 3.10)
+project(sender)
+
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+find_package(QT NAMES Qt5 REQUIRED COMPONENTS Widgets Network)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network)
+
+file(GLOB sender_SOURCES
+    "*.cpp"
+    "*.h"
+    "*.ui"
+)
+
+file(GLOB SHARED_SOURCES
+    "${CMAKE_SOURCE_DIR}/shared/*.cpp"
+    "${CMAKE_SOURCE_DIR}/shared/*.h"
+)
+
+
+add_executable(sender ${sender_SOURCES} ${SHARED_SOURCES})
+
+target_include_directories(sender PRIVATE ${CMAKE_SOURCE_DIR}/shared)
+
+target_link_libraries(sender PRIVATE Qt5::Widgets Qt5::Network)
+
